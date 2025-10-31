@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">智能相机</string>
+    <string name="open_camera">打开相机</string>
+    <string name="take_photo">拍照</string>
+    <string name="processing">处理中...</string>
+    <string name="photo_saved">照片已保存</string>
+    <string name="error_camera">无法打开相机</string>
+    <string name="permission_required">需要相机和存储权限</string>
+    <string name="grant_permission">授予权限</string>
+    <string name="back">返回</string>
+    <string name="save">保存</string>
+    <string name="retry">重试</string>
+    <string name="camera_permission_title">相机权限</string>
+    <string name="camera_permission_message">需要相机权限才能使用拍照功能</string>
+    <string name="storage_permission_title">存储权限</string>
+    <string name="storage_permission_message">需要存储权限才能保存照片</string>
+</resources>

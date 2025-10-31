@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 按钮样式 -->
+    <style name="Button.Primary" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/purple_500</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="cornerRadius">@dimen/corner_radius</item>
+        <item name="android:minHeight">@dimen/button_height</item>
+    </style>
+
+    <style name="Button.Secondary" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="strokeColor">@color/purple_500</item>
+        <item name="android:textColor">@color/purple_500</item>
+        <item name="cornerRadius">@dimen/corner_radius</item>
+        <item name="android:minHeight">@dimen/button_height</item>
+    </style>
+
+    <!-- 文本样式 -->
+    <style name="TextAppearance.Title" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="android:textSize">@dimen/text_size_title</item>
+        <item name="android:textColor">@color/color_text_primary</item>
+    </style>
+
+    <style name="TextAppearance.Body" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textColor">@color/color_text_secondary</item>
+    </style>
+
+    <!-- 相机控件样式 -->
+    <style name="CaptureButton" parent="android:Widget">
+        <item name="android:background">@drawable/capture_button_background</item>
+        <item name="android:minWidth">@dimen/capture_button_size</item>
+        <item name="android:minHeight">@dimen/capture_button_size</item>
+    </style>
+
+</resources>
