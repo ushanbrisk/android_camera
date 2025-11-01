@@ -20,6 +20,11 @@ import com.example.myapplication2.utils.PermissionUtils;
 import com.example.myapplication2.utils.FileUtils;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -136,20 +141,24 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    // 应用灰度效果
                     Bitmap processedBitmap = ImageProcessor.processImage(
                             photoPath, ImageProcessor.ProcessType.GRAYSCALE);
 
                     if (processedBitmap != null) {
-                        // 保存处理后的图片
-                        String processedPath = photoPath.replace(".jpg", "_processed.jpg");
-                        ImageProcessor.saveBitmap(processedBitmap, processedPath);
+                        // 使用新方法保存到公共目录
+                        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+                        String fileName = "processed_" + timeStamp + ".jpg";
 
-                        // 在主线程更新UI
+                        Uri savedUri = FileUtils.saveToMediaStore(MainActivity.this, processedBitmap, fileName);
+
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                displayProcessedPhoto(processedPath);
+                                if (savedUri != null) {
+                                    displayProcessedPhoto(savedUri);
+                                } else {
+                                    showError("保存失败");
+                                }
                             }
                         });
                     }
@@ -166,24 +175,28 @@ public class MainActivity extends AppCompatActivity {
         }).start();
     }
 
-    private void displayProcessedPhoto(String imagePath) {
+    private void displayProcessedPhoto(Uri imageUri) {
         showProcessing(false);
 
-        // 加载并显示图片
-        Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
-        if (bitmap != null) {
-            ivPreview.setImageBitmap(bitmap);
-            tvStatus.setText("处理完成");
-            tvStatus.setVisibility(View.VISIBLE);
+        try {
+            // 从 URI 加载图片
+            InputStream inputStream = getContentResolver().openInputStream(imageUri);
+            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
 
-            // 通知图库更新
-            notifyGallery(imagePath);
-
-            Toast.makeText(this, "照片已保存并处理", Toast.LENGTH_SHORT).show();
-        } else {
-            showError("无法加载图片");
+            if (bitmap != null) {
+                ivPreview.setImageBitmap(bitmap);
+                tvStatus.setText("处理完成 - 已保存到相册");
+                tvStatus.setVisibility(View.VISIBLE);
+                Toast.makeText(this, "照片已保存到相册", Toast.LENGTH_SHORT).show();
+            } else {
+                showError("无法加载图片");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            showError("加载图片失败");
         }
     }
+
 
     private void showError(String message) {
         showProcessing(false);

@@ -259,7 +259,7 @@ public class CameraActivity extends AppCompatActivity {
                             buffer.get(bytes);
 
                             // 保存图片
-                            File imageFile = FileUtils.createImageFile(CameraActivity.this);
+                            File imageFile = FileUtils.createPublicImageFile(CameraActivity.this);
                             try (FileOutputStream output = new FileOutputStream(imageFile)) {
                                 output.write(bytes);
                             }
