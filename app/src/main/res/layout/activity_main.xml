@@ -30,10 +30,21 @@
         android:layout_height="wrap_content"
         android:text="@string/open_camera"
         android:textSize="10sp"
-        android:paddingHorizontal="32dp"
+        android:paddingHorizontal="16dp"
         android:paddingVertical="16dp"
         android:backgroundTint="@color/purple_500"
         android:textColor="@color/white" />
+
+    <Button
+        android:id="@+id/btn_upload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/upload"
+        android:textSize="10sp"
+        android:layout_below="@id/btn_open_camera"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:visibility="gone" />
 
     <ProgressBar
         android:id="@+id/progress_bar"

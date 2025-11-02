@@ -3,6 +3,7 @@
     <string name="app_title">拍照搜题</string>
     <string name="open_camera">打开相机</string>
     <string name="take_photo">拍照</string>
+    <string name="upload">上传识别</string>
     <string name="processing">处理中...</string>
     <string name="photo_saved">照片已保存</string>
     <string name="error_camera">无法打开相机</string>
