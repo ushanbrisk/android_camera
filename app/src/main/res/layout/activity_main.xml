@@ -14,51 +14,215 @@
         android:textSize="12sp"
         android:textStyle="bold"
         android:textColor="#333333"
+        android:layout_gravity="center_horizontal"
         android:layout_marginBottom="10dp" />
 
-    <ImageView
-        android:id="@+id/iv_preview"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:scaleType="centerCrop"
-        android:background="#E0E0E0"
-        android:layout_marginBottom="30dp" />
+    <!-- 图片预览区域 -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginBottom="20dp">
 
-    <Button
-        android:id="@+id/btn_open_camera"
-        android:layout_width="wrap_content"
+        <ImageView
+            android:id="@+id/iv_preview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:background="#E0E0E0"/>
+
+        <!-- 图片上的识别结果覆盖层 -->
+        <TextView
+            android:id="@+id/tv_image_result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="#80000000"
+            android:textColor="#FFFFFF"
+            android:padding="12dp"
+            android:textSize="14sp"
+            android:visibility="gone"
+            android:maxLines="3"
+            android:ellipsize="end" />
+    </FrameLayout>
+
+    <!-- 历史记录区域 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:background="#FFFFFF"
+        android:padding="12dp"
+        android:elevation="4dp"
+        android:layout_marginBottom="20dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="识别历史"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#333333"
+            android:layout_marginBottom="8dp" />
+
+        <ScrollView
+            android:id="@+id/scroll_history"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:id="@+id/ll_history_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+        </ScrollView>
+    </LinearLayout>
+
+    <!-- 控制按钮区域 -->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/open_camera"
-        android:textSize="10sp"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="16dp"
-        android:backgroundTint="@color/purple_500"
-        android:textColor="@color/white" />
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginBottom="10dp">
 
-    <Button
-        android:id="@+id/btn_upload"
-        android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/btn_open_camera"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/open_camera"
+            android:textSize="14sp"
+            android:paddingVertical="12dp"
+            android:backgroundTint="@color/purple_500"
+            android:textColor="@color/white"
+            android:layout_marginEnd="8dp" />
+
+        <Button
+            android:id="@+id/btn_upload"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/upload"
+            android:textSize="14sp"
+            android:paddingVertical="12dp"
+            android:backgroundTint="@color/teal_700"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            android:layout_marginStart="8dp" />
+    </LinearLayout>
+
+    <!-- 当前识别结果区域 - 修改为支持滚动 -->
+    <LinearLayout
+        android:id="@+id/ll_current_result"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/upload"
-        android:textSize="10sp"
-        android:layout_below="@id/btn_open_camera"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:visibility="gone" />
+        android:orientation="vertical"
+        android:background="#E3F2FD"
+        android:padding="16dp"
+        android:visibility="gone"
+        android:elevation="2dp"
+        android:layout_marginBottom="10dp">
 
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="当前识别结果"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="#1976D2"
+            android:layout_marginBottom="8dp" />
+
+        <!-- 添加ScrollView支持滚动 -->
+        <ScrollView
+            android:id="@+id/scroll_current_result"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="#FFFFFF"
+            android:padding="8dp"
+            android:scrollbars="vertical">
+
+            <TextView
+                android:id="@+id/tv_current_result"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="#333333"
+                android:lineSpacingMultiplier="1.2"
+                android:padding="8dp" />
+
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end"
+            android:layout_marginTop="8dp">
+
+            <Button
+                android:id="@+id/btn_copy_result"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="复制"
+                android:textSize="12sp"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="4dp"
+                android:backgroundTint="#4CAF50"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/btn_clear_current"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="清除"
+                android:textSize="12sp"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="4dp"
+                android:backgroundTint="#F44336"
+                android:textColor="#FFFFFF"
+                android:layout_marginStart="8dp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- 状态指示器 -->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:visibility="gone" />
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingVertical="8dp">
 
-    <TextView
-        android:id="@+id/tv_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:layout_marginTop="10dp"
-        android:visibility="gone" />
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:visibility="gone" />
 
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="12sp"
+            android:textColor="#666666"
+            android:paddingStart="8dp"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btn_clear_history"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="清空历史"
+            android:textSize="10sp"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="4dp"
+            android:backgroundTint="#FF9800"
+            android:textColor="#FFFFFF" />
+
+    </LinearLayout>
 </LinearLayout>
